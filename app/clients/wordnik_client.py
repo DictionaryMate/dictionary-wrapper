@@ -1,7 +1,7 @@
-import bs4 as bs
 import requests
 
 import app.config as config
+from app.clients._wordnik_utils import _parse_xml
 from app.exceptions import WordnikClientException
 from app.models.wordnik_models import WordnikAudio
 
@@ -37,11 +37,11 @@ class WordnikClient:
             )
 
         if response.status_code == 404:
-            return None
+            return []
 
         ety_list = response.json()
 
-        return [WordnikClient._parse_xml(ety) for ety in ety_list]
+        return [_parse_xml(ety) for ety in ety_list]
 
     def extract_example_sentences(self) -> list[str]:
         url = f"{config.WORDNIK_API_BASE_URL}/{self.word}/examples?includeDuplicates=false&useCanonical=false&limit=10&api_key={config.WORDNIK_API_KEY}"
@@ -58,7 +58,3 @@ class WordnikClient:
 
         sentences = [sentence_obj.get("text", "") for sentence_obj in sentence_objs]
         return list(filter(lambda x: len(x) > 0, sentences))
-
-    @staticmethod
-    def _parse_xml(content: str) -> str:
-        return bs.BeautifulSoup(content, "xml").text
