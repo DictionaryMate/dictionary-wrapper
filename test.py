@@ -1,3 +1,5 @@
+import time
+
 from english_ipa.cambridge import CambridgeDictScraper
 
 from app.clients.mw_client import MerriamWebsterClient
@@ -5,6 +7,8 @@ from app.clients.wordnik_client import WordnikClient
 from app.models.common_models import WordField
 
 word = "gallant"
+
+start_time = time.time()
 
 mw_client = MerriamWebsterClient(word)
 definitions = mw_client.extract_definitions()
@@ -34,3 +38,6 @@ word_object = WordField(
 
 anki_dto = word_object.to_anki_field()
 print(anki_dto)
+print("\n")
+
+print(f"Done in {time.time() - start_time} seconds")
