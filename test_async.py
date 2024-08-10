@@ -2,6 +2,7 @@ import asyncio
 import time
 
 import aiohttp
+from english_ipa.cambridge_async import AsyncCambridgeDictScraper
 
 from app.clients._wm_utils import (
     extract_audio_link,
@@ -17,6 +18,7 @@ from app.models.common_models import WordField
 word = "gallant"
 wordnik_client = AsyncWordnikClient(word)
 mw_client = AsyncMerriamWebsterClient(word)
+ipa_scraper = AsyncCambridgeDictScraper()
 
 
 async def fetch():
@@ -30,14 +32,14 @@ async def fetch():
         sentences = asyncio.create_task(
             wordnik_client.extract_example_sentences(session)
         )
+        ipa = asyncio.create_task(ipa_scraper.get_ipa_in_str(word))
 
-        return await asyncio.gather(mw_dictionary, mw_thesaurus, sentences)
+        return await asyncio.gather(mw_dictionary, mw_thesaurus, sentences, ipa)
 
 
 async def main():
-    mw_dict, mw_thesaurus, sentences = await fetch()
+    mw_dict, mw_thesaurus, sentences, ipa = await fetch()
     definitions = extract_definitions(word, mw_dict)
-    ipa_in_str = ""
     etymologies = extract_etymologies(word, mw_thesaurus)
     syns = extract_synonyms_or_antonyms(word, mw_thesaurus, "syns")
     ants = extract_synonyms_or_antonyms(word, mw_thesaurus, "ants")
@@ -45,7 +47,7 @@ async def main():
 
     word_object = WordField(
         word=word,
-        phonetic=ipa_in_str,
+        phonetic=ipa,
         definitions=definitions,
         etymologies=etymologies,
         synonyms=syns,
