@@ -1,0 +1,4 @@
+from app.clients._wm_utils import clean_text
+
+text = "adjective<br>showy in dress or bearing smart<br><br><br>adjective<br>splendid, stately <br>a {wi}gallant{/wi} ship<br><br>adjective<br>splendid, stately <br>a {wi}gallant{/wi} ship<br><br>adjective<br>courteously and elaborately attentive especially to ladies<br><br><br>noun<br>a young man of fashion<br><br><br>noun<br>ladies' man<br><br><br>verb<br>to pay court to (a lady) attend <br>used to {wi}gallant{/wi} her in his youth<br><br>verb<br>to pay court to (a lady) attend <br>used to {wi}gallant{/wi} her in his youth<br><br>verb<br>to manipulate (a fan) in a modish manner<br><br><br>verb<br>to pay court to ladies<br><br><br>biographical name<br>Mavis 1922–2014 originally Mavis de Trafford Young Canadian-French writer<br>"
+print(clean_text(text))
