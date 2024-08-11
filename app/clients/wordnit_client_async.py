@@ -10,8 +10,9 @@ from app.models.wordnik_models import WordnikAudio
 
 
 class AsyncWordnikClient:
-    def __init__(self, word: str) -> None:
+    def __init__(self, word: str, api_key: str) -> None:
         self.word = word
+        self.api_key = api_key
 
     @staticmethod
     async def fetch_async(
@@ -31,7 +32,7 @@ class AsyncWordnikClient:
             return json.loads(text_response)
 
     async def extract_example_sentences(self, session: ClientSession):
-        url = f"{config.WORDNIK_API_BASE_URL}/{self.word}/examples?includeDuplicates=false&useCanonical=false&limit=10&api_key={config.WORDNIK_API_KEY}"
+        url = f"{config.WORDNIK_API_BASE_URL}/{self.word}/examples?includeDuplicates=false&useCanonical=false&limit=10&api_key={self.api_key}"
         response = await self.fetch_async(url, session)
 
         if response is None:
@@ -43,7 +44,7 @@ class AsyncWordnikClient:
         return list(filter(lambda x: len(x) > 0, sentences))
 
     async def extract_audio_link(self, session: ClientSession):
-        url = f"{config.WORDNIK_API_BASE_URL}/{self.word}/audio?useCanonical=false&limit=50&api_key={config.WORDNIK_API_KEY}"
+        url = f"{config.WORDNIK_API_BASE_URL}/{self.word}/audio?useCanonical=false&limit=50&api_key={self.api_key}"
         response_list = await self.fetch_async(url, session)
 
         if response_list is None:
@@ -56,7 +57,7 @@ class AsyncWordnikClient:
         return macmillan[0].fileUrl if len(macmillan) > 0 else wordnik_audios[0].fileUrl
 
     async def extract_etymologies(self, session: ClientSession):
-        url = f"{config.WORDNIK_API_BASE_URL}/{self.word}/etymologies?useCanonical=false&api_key={config.WORDNIK_API_KEY}"
+        url = f"{config.WORDNIK_API_BASE_URL}/{self.word}/etymologies?useCanonical=false&api_key={self.api_key}"
         ety_list = await self.fetch_async(url, session, not_found_return_value=[])
 
         return [_parse_xml(ety) for ety in ety_list]

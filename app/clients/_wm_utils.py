@@ -1,7 +1,7 @@
 import re
 import string
 
-from app.config import MW_API_CONFIG, MW_AUDIO_BASE_URL, MW_AUDIO_FORMAT, MWDictType
+from app.config import MW_API_URL, MW_AUDIO_BASE_URL, MW_AUDIO_FORMAT, MWDictType
 from app.models.common_models import Definition, SynonymOrAntonym
 from app.models.syn_ant_enum import SynAntEnum
 
@@ -124,9 +124,9 @@ def extract_synonyms_or_antonyms(
     return extracted_results
 
 
-def form_url(word: str, dict_type: MWDictType) -> str:
-    config = MW_API_CONFIG[dict_type.value]
-    return f"{config['url']}" + f"/{word}?" + f"key={config['key']}"
+def form_url(word: str, dict_type: MWDictType, api_key: str) -> str:
+    base_url = MW_API_URL[dict_type.value]
+    return base_url + f"/{word}?" + f"key={api_key}"
 
 
 def clean_text(text: str) -> str:

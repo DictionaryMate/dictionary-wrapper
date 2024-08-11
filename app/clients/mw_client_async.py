@@ -28,6 +28,8 @@ class AsyncMerriamWebsterClient:
 
             return json.loads(text_response)
 
-    async def get_api_result(self, session: ClientSession, dict_type: str):
-        url = form_url(self.word, dict_type)
+    async def get_api_result(
+        self, session: ClientSession, dict_type: str, api_key: str
+    ):
+        url = form_url(self.word, dict_type, api_key)
         return await AsyncMerriamWebsterClient.fetch_async(url, session)

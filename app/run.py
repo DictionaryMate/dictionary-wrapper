@@ -19,15 +19,17 @@ from app.models.common_models import WordField
 from app.models.syn_ant_enum import SynAntEnum
 
 
-def get_word_field(word: str) -> WordField:
-    mw_client = MerriamWebsterClient(word)
+def get_word_field(
+    word: str, dictionary_api_key: str, thesaurus_api_key: str, wordnik_api_key: str
+) -> WordField:
+    mw_client = MerriamWebsterClient(word, dictionary_api_key, thesaurus_api_key)
     definitions = mw_client.extract_definitions()
     etymologies = mw_client.extract_etymologies()
     syns = mw_client.extract_synonyms_or_antonyms(SynAntEnum.Synonym)
     ants = mw_client.extract_synonyms_or_antonyms(SynAntEnum.Antonym)
     audio_link = mw_client.extract_audio_link()
 
-    wordnik_client = WordnikClient(word)
+    wordnik_client = WordnikClient(word, wordnik_api_key)
     sentences = wordnik_client.extract_example_sentences()
 
     scraper = CambridgeDictScraper()
@@ -47,16 +49,18 @@ def get_word_field(word: str) -> WordField:
     return word_object
 
 
-async def get_word_field_async(word: str):
-    wordnik_client = AsyncWordnikClient(word)
+async def get_word_field_async(
+    word: str, dictionary_api_key: str, thesaurus_api_key: str, wordnik_api_key: str
+) -> WordField:
+    wordnik_client = AsyncWordnikClient(word, wordnik_api_key)
     mw_client = AsyncMerriamWebsterClient(word)
     ipa_scraper = AsyncCambridgeDictScraper()
     async with aiohttp.ClientSession() as session:
         mw_dictionary = asyncio.create_task(
-            mw_client.get_api_result(session, MWDictType.DICTIONARY)
+            mw_client.get_api_result(session, MWDictType.DICTIONARY, dictionary_api_key)
         )
         mw_thesaurus = asyncio.create_task(
-            mw_client.get_api_result(session, MWDictType.THESAURUS)
+            mw_client.get_api_result(session, MWDictType.THESAURUS, thesaurus_api_key)
         )
         sentences = asyncio.create_task(
             wordnik_client.extract_example_sentences(session)

@@ -7,8 +7,9 @@ from app.models.wordnik_models import WordnikAudio
 
 
 class WordnikClient:
-    def __init__(self, word: str) -> None:
+    def __init__(self, word: str, api_key: str) -> None:
         self.word = word
+        self.api_key = api_key
 
     def extract_audio_link(self) -> str | None:
         url = f"{config.WORDNIK_API_BASE_URL}/{self.word}/audio?useCanonical=false&limit=50&api_key={config.WORDNIK_API_KEY}"

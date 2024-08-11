@@ -22,10 +22,16 @@ from app.models.common_models import Definition, SynonymOrAntonym
 
 
 class MerriamWebsterClient:
-    def __init__(self, word: str) -> None:
+    def __init__(
+        self, word: str, dictionary_api_key: str, thesaurus_api_key: str
+    ) -> None:
         self.word = word
-        self.dictionary_result = self._get_api_result(MWDictType.DICTIONARY)
-        self.thesaurus_result = self._get_api_result(MWDictType.THESAURUS)
+        self.dictionary_result = self._get_api_result(
+            MWDictType.DICTIONARY, dictionary_api_key
+        )
+        self.thesaurus_result = self._get_api_result(
+            MWDictType.THESAURUS, thesaurus_api_key
+        )
 
     def extract_audio_link(self) -> str | None:
         return extract_audio_link(self.dictionary_result)
@@ -41,8 +47,8 @@ class MerriamWebsterClient:
             self.word, self.thesaurus_result, type.value
         )
 
-    def _get_api_result(self, dict_type: MWDictType) -> list[dict]:
-        url = form_url(self.word, dict_type)
+    def _get_api_result(self, dict_type: MWDictType, api_key: str) -> list[dict]:
+        url = form_url(self.word, dict_type, api_key)
         try:
             req = requests.get(url)
         except requests.exceptions.SSLError:
