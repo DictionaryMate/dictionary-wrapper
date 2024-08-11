@@ -16,14 +16,15 @@ from app.clients.wordnik_client import WordnikClient
 from app.clients.wordnit_client_async import AsyncWordnikClient
 from app.config import MWDictType
 from app.models.common_models import WordField
+from app.models.syn_ant_enum import SynAntEnum
 
 
 def get_word_field(word: str) -> WordField:
     mw_client = MerriamWebsterClient(word)
     definitions = mw_client.extract_definitions()
     etymologies = mw_client.extract_etymologies()
-    syns = mw_client.extract_synonyms_or_antonyms("syns")
-    ants = mw_client.extract_synonyms_or_antonyms("ants")
+    syns = mw_client.extract_synonyms_or_antonyms(SynAntEnum.Synonym)
+    ants = mw_client.extract_synonyms_or_antonyms(SynAntEnum.Antonym)
     audio_link = mw_client.extract_audio_link()
 
     wordnik_client = WordnikClient(word)
@@ -62,7 +63,7 @@ async def get_word_field_async(word: str):
         )
         ipa = asyncio.create_task(ipa_scraper.get_ipa_in_str(word))
 
-        mw_dict, mw_thesaurus, sentences = await asyncio.gather(
+        mw_dict, mw_thesaurus, sentences, ipa = await asyncio.gather(
             mw_dictionary, mw_thesaurus, sentences, ipa
         )
 
@@ -80,8 +81,8 @@ def _get_word_field_from_request_result(
 ) -> WordField:
     definitions = extract_definitions(word, mw_dict)
     etymologies = extract_etymologies(word, mw_thesaurus)
-    syns = extract_synonyms_or_antonyms(word, mw_thesaurus, "syns")
-    ants = extract_synonyms_or_antonyms(word, mw_thesaurus, "ants")
+    syns = extract_synonyms_or_antonyms(word, mw_thesaurus, SynAntEnum.Synonym)
+    ants = extract_synonyms_or_antonyms(word, mw_thesaurus, SynAntEnum.Antonym)
     audio_link = extract_audio_link(mw_dict)
 
     word_object = WordField(

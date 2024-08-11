@@ -1,6 +1,5 @@
 import sys
 from pathlib import Path
-from typing import Annotated
 
 from app.clients._wm_utils import (
     extract_audio_link,
@@ -10,6 +9,7 @@ from app.clients._wm_utils import (
     form_url,
 )
 from app.exceptions import MerriamWebsterClientException
+from app.models.syn_ant_enum import SynAntEnum
 
 sys.path.append(str(Path(__file__).parent.parent))
 
@@ -36,10 +36,10 @@ class MerriamWebsterClient:
     def extract_definitions(self) -> list[Definition]:
         return extract_definitions(self.word, self.dictionary_result)
 
-    def extract_synonyms_or_antonyms(
-        self, type: Annotated[str, "syns or ants"]
-    ) -> list[SynonymOrAntonym]:
-        return extract_synonyms_or_antonyms(self.word, self.thesaurus_result, type)
+    def extract_synonyms_or_antonyms(self, type: SynAntEnum) -> list[SynonymOrAntonym]:
+        return extract_synonyms_or_antonyms(
+            self.word, self.thesaurus_result, type.value
+        )
 
     def _get_api_result(self, dict_type: MWDictType) -> list[dict]:
         url = form_url(self.word, dict_type)

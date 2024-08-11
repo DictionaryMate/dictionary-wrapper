@@ -1,10 +1,9 @@
 import re
 import string
 
-from typing_extensions import Annotated
-
 from app.config import MW_API_CONFIG, MW_AUDIO_BASE_URL, MW_AUDIO_FORMAT, MWDictType
 from app.models.common_models import Definition, SynonymOrAntonym
+from app.models.syn_ant_enum import SynAntEnum
 
 
 def extract_audio_link(dictionary_result: list[dict]) -> str | None:
@@ -91,7 +90,7 @@ def _is_not_derived_entry(word: str, id: str) -> bool:
 
 
 def extract_synonyms_or_antonyms(
-    word: str, thesaurus_result: list[dict], type: Annotated[str, "syns or ants"]
+    word: str, thesaurus_result: list[dict], type: SynAntEnum
 ) -> list[SynonymOrAntonym]:
     extracted_results = []
     for entry in thesaurus_result:
