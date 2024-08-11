@@ -42,7 +42,7 @@ def get_word_field(
         etymologies=etymologies,
         synonyms=syns,
         antonyms=ants,
-        testSentences=sentences,
+        exampleSentences=sentences,
         audioLink=audio_link,
     )
 
@@ -96,7 +96,7 @@ def _get_word_field_from_request_result(
         etymologies=etymologies,
         synonyms=syns,
         antonyms=ants,
-        testSentences=sentences,
+        exampleSentences=sentences,
         audioLink=audio_link,
     )
 

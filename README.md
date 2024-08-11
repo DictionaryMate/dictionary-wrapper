@@ -1,3 +1,94 @@
+# Dictionary Wrapper
+- Get definitions, synonyms and antonyms, etymology, audio link from Merriam Webster Dictionary API
+- Get example sentences from Wordnik API
+- Get IPA using Cambridge Dictionary scraper
+
+## Models
+### Synonym or Antonym
+Result model for synonyms or antonyms
+```python
+class SynonymOrAntonym(BaseModel):
+    partOfSpeech: str
+    detail: str
+    words: list[str]
+```
+
+### Definition
+Result model for definition
+```python
+class Definition(BaseModel):
+    partOfSpeech: str
+    detail: str
+    exampleSentence: str
+```
+
+### WordField
+Result model for all the word fields
+```python
+class WordField(BaseModel):
+    word: str
+    phonetic: str
+    definitions: list[Definition]
+    synonyms: list[SynonymOrAntonym]
+    antonyms: list[SynonymOrAntonym]
+    etymologies: list[str]
+    exampleSentences: list[str]
+    audioLink: str | None = None
+```
+
+## Syncronous Version
+
+```python
+import os
+
+from dotenv import load_dotenv
+from english_ipa.cambridge import CambridgeDictScraper
+
+from dictionary_wrapper import get_word_field
+from dictionary_wrapper.clients.mw_client import MerriamWebsterClient
+from dictionary_wrapper.models.syn_ant_enum import SynAntEnum
+
+load_dotenv()
+
+## get all the word fields
+dictionary_api_key = os.getenv("MW_DICT_KEY")
+thesaurus_api_key = os.getenv("MW_THE_KEY")
+wordnik_api_key = os.getenv("WORDIK_API_KEY")
+
+word = "gallant"
+
+word_field = get_word_field(
+    word, dictionary_api_key, thesaurus_api_key, wordnik_api_key
+)
+
+## get definitions from Merriam-Webster Dictionary
+mw_client = MerriamWebsterClient(word, dictionary_api_key, thesaurus_api_key)
+definition = mw_client.extract_definitions()
+
+## get definitions, synonyms and antonyms from Merriam-Webster Thesaurus
+synonyms = mw_client.extract_synonyms_or_antonyms(SynAntEnum.Synonym)
+antonyms = mw_client.extract_synonyms_or_antonyms(SynAntEnum.Antonym)
+
+## get audio link from Merriam-Webster Dictionary
+audio_link = mw_client.extract_audio_link()
+
+## get etymologies from Merriam-Webster Thesaurus
+etymologies = mw_client.extract_etymologies()
+
+## get example sentences from Wordnik
+wordnik_client = MerriamWebsterClient(word, dictionary_api_key, thesaurus_api_key)
+example_sentences = wordnik_client.extract_example_sentences()
+
+## get audio link from Wordnik
+audio_link = wordnik_client.extract_audio_link()
+
+## get ipa from Cambridge Dictionary
+scraper = CambridgeDictScraper()
+ipa = scraper.get_ipa_in_str(word)
+```
+
+## Asyncronous Version
+```python
 import asyncio
 import os
 
@@ -87,3 +178,5 @@ async def get_ipa(word: str):
     ipa = await scraper.get_ipa_in_str(word)
 
     return ipa
+```
+

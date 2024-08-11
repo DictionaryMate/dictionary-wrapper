@@ -13,11 +13,6 @@ class SynonymOrAntonym(BaseModel):
     words: list[str]
 
 
-class _PIEroot(BaseModel):
-    root: str
-    sameRootWords: list[str]
-
-
 class WordField(BaseModel):
     word: str
     phonetic: str
@@ -25,8 +20,5 @@ class WordField(BaseModel):
     synonyms: list[SynonymOrAntonym]
     antonyms: list[SynonymOrAntonym]
     etymologies: list[str]
-    PIEroot: _PIEroot | None = None
-    howToUse: list[str] = []
-    testSentences: list[str]
-    audioLink: str | None = None
+    exampleSentences: list[str]
     audioLink: str | None = None
