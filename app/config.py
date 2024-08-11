@@ -1,6 +1,5 @@
 """Configurations."""
 
-import os
 from enum import Enum
 
 from dotenv import load_dotenv
@@ -25,5 +24,4 @@ MW_AUDIO_BASE_URL = "https://media.merriam-webster.com/audio/prons/en/us"
 MW_AUDIO_FORMAT = "mp3"
 
 # wordnik config
-WORDNIK_API_KEY = os.getenv("WORDIK_API_KEY")
 WORDNIK_API_BASE_URL = "https://api.wordnik.com/v4/word.json"
