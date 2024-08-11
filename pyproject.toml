@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dictionary-wrapper"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["adaxiang <adaxiang3104@gmail.com>"]
 readme = "README.md"
