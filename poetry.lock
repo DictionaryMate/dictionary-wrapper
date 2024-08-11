@@ -298,13 +298,13 @@ files = [
 
 [[package]]
 name = "english-ipa"
-version = "0.3.0"
+version = "1.0.0"
 description = ""
 optional = false
 python-versions = "<4.0,>=3.12"
 files = [
-    {file = "english_ipa-0.3.0-py3-none-any.whl", hash = "sha256:18732f8ad175ccf37e55214cd954fa0c000a9366c8635091f71e19bfa9531b76"},
-    {file = "english_ipa-0.3.0.tar.gz", hash = "sha256:cb10af98d15480e36acc6a1dccfda9f133f36a3315d9fb2e05d27a186dfddd3c"},
+    {file = "english_ipa-1.0.0-py3-none-any.whl", hash = "sha256:902c838bdbf1055cfd7a9b4064beee6e2263b942e40ed8633501c5bee90075bf"},
+    {file = "english_ipa-1.0.0.tar.gz", hash = "sha256:b9d318c66f05e51c0b529b79233d8ee2e7e715d3d193c397023f4bedf59fc35e"},
 ]
 
 [package.dependencies]
@@ -970,4 +970,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "13c8d363769ab6b90ccdc3974a8e0a8f636a93bd33201487c330e8c337b52375"
+content-hash = "f704386b7c75ee3c5e1311c65dba558f8e9353d8c890e54e6a3a8ea7882f28fa"
