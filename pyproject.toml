@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "ankimate"
+name = "dictionary-wrapper"
 version = "0.1.0"
 description = ""
 authors = ["adaxiang <adaxiang3104@gmail.com>"]

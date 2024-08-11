@@ -4,19 +4,19 @@ import aiohttp
 from english_ipa.cambridge import CambridgeDictScraper
 from english_ipa.cambridge_async import AsyncCambridgeDictScraper
 
-from app.clients._wm_utils import (
+from dictionary_wrapper.clients._wm_utils import (
     extract_audio_link,
     extract_definitions,
     extract_etymologies,
     extract_synonyms_or_antonyms,
 )
-from app.clients.mw_client import MerriamWebsterClient
-from app.clients.mw_client_async import AsyncMerriamWebsterClient
-from app.clients.wordnik_client import WordnikClient
-from app.clients.wordnit_client_async import AsyncWordnikClient
-from app.config import MWDictType
-from app.models.common_models import WordField
-from app.models.syn_ant_enum import SynAntEnum
+from dictionary_wrapper.clients.mw_client import MerriamWebsterClient
+from dictionary_wrapper.clients.mw_client_async import AsyncMerriamWebsterClient
+from dictionary_wrapper.clients.wordnik_client import WordnikClient
+from dictionary_wrapper.clients.wordnit_client_async import AsyncWordnikClient
+from dictionary_wrapper.config import MWDictType
+from dictionary_wrapper.models.common_models import WordField
+from dictionary_wrapper.models.syn_ant_enum import SynAntEnum
 
 
 def get_word_field(

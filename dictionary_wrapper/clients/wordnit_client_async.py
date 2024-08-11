@@ -3,10 +3,10 @@ from typing import Any, Coroutine
 
 from aiohttp import ClientSession
 
-from app import config
-from app.clients._wordnik_utils import _parse_xml
-from app.exceptions import WordnikClientException
-from app.models.wordnik_models import WordnikAudio
+from dictionary_wrapper import config
+from dictionary_wrapper.clients._wordnik_utils import _parse_xml
+from dictionary_wrapper.exceptions import WordnikClientException
+from dictionary_wrapper.models.wordnik_models import WordnikAudio
 
 
 class AsyncWordnikClient:

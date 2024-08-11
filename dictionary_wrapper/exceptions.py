@@ -1,7 +1,3 @@
-class AnkiClientException(Exception):
-    pass
-
-
 class MerriamWebsterClientException(Exception):
     def __init__(self, status_code: int, content: str, url: str) -> None:
         self.message = "Error happened on the Merriam Webster Client Side"

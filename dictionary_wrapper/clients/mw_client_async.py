@@ -3,8 +3,8 @@ from typing import Any
 
 from aiohttp import ClientSession
 
-from app.clients._wm_utils import form_url
-from app.exceptions import MerriamWebsterClientException
+from dictionary_wrapper.clients._wm_utils import form_url
+from dictionary_wrapper.exceptions import MerriamWebsterClientException
 
 
 class AsyncMerriamWebsterClient:

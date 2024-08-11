@@ -1,9 +1,14 @@
 import re
 import string
 
-from app.config import MW_API_URL, MW_AUDIO_BASE_URL, MW_AUDIO_FORMAT, MWDictType
-from app.models.common_models import Definition, SynonymOrAntonym
-from app.models.syn_ant_enum import SynAntEnum
+from dictionary_wrapper.config import (
+    MW_API_URL,
+    MW_AUDIO_BASE_URL,
+    MW_AUDIO_FORMAT,
+    MWDictType,
+)
+from dictionary_wrapper.models.common_models import Definition, SynonymOrAntonym
+from dictionary_wrapper.models.syn_ant_enum import SynAntEnum
 
 
 def extract_audio_link(dictionary_result: list[dict]) -> str | None:
@@ -134,6 +139,11 @@ def clean_text(text: str) -> str:
     pattern2 = r"\{bc\}|\{ldquo\}|\{rdquo\}"
 
     pattern3 = r"\{[^|]*\|?|[{}|]"
+
+    clean1 = re.sub(pattern1, "", text)
+    clean2 = re.sub(pattern2, "", clean1)
+    clean3 = re.sub(pattern3, "", clean2)
+    return clean3
 
     clean1 = re.sub(pattern1, "", text)
     clean2 = re.sub(pattern2, "", clean1)

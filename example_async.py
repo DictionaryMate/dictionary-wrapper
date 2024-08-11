@@ -3,7 +3,7 @@ import os
 
 from dotenv import load_dotenv
 
-from app.run import get_word_field_async
+from dictionary_wrapper import get_word_field_async
 
 load_dotenv()
 dictionary_api_key = os.getenv("MW_DICT_KEY")

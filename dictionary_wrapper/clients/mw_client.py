@@ -1,15 +1,15 @@
 import sys
 from pathlib import Path
 
-from app.clients._wm_utils import (
+from dictionary_wrapper.clients._wm_utils import (
     extract_audio_link,
     extract_definitions,
     extract_etymologies,
     extract_synonyms_or_antonyms,
     form_url,
 )
-from app.exceptions import MerriamWebsterClientException
-from app.models.syn_ant_enum import SynAntEnum
+from dictionary_wrapper.exceptions import MerriamWebsterClientException
+from dictionary_wrapper.models.syn_ant_enum import SynAntEnum
 
 sys.path.append(str(Path(__file__).parent.parent))
 
@@ -17,8 +17,8 @@ import json
 
 import requests
 
-from app.config import MWDictType
-from app.models.common_models import Definition, SynonymOrAntonym
+from dictionary_wrapper.config import MWDictType
+from dictionary_wrapper.models.common_models import Definition, SynonymOrAntonym
 
 
 class MerriamWebsterClient:
