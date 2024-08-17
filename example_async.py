@@ -8,6 +8,7 @@ from english_ipa.cambridge_async import AsyncCambridgeDictScraper
 from dictionary_wrapper import get_word_field_async
 from dictionary_wrapper.clients._wm_utils import (
     extract_definitions,
+    extract_etymologies,
     extract_synonyms_or_antonyms,
 )
 from dictionary_wrapper.clients.mw_client_async import AsyncMerriamWebsterClient
@@ -62,7 +63,7 @@ async def get_definitions(
     definitions = extract_definitions(word, dictionary_result)
     synonyms = extract_synonyms_or_antonyms(SynAntEnum.Synonym, thesaurus_result)
     antonyms = extract_synonyms_or_antonyms(SynAntEnum.Antonym, thesaurus_result)
-    etymologies = extract_definitions(word, dictionary_result)
+    etymologies = extract_etymologies(word, dictionary_result)
     audio_link = extract_definitions(word, dictionary_result)
 
     return definitions, synonyms, antonyms, etymologies, audio_link

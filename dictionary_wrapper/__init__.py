@@ -84,7 +84,7 @@ def _get_word_field_from_request_result(
     ipa: str,
 ) -> WordField:
     definitions = extract_definitions(word, mw_dict)
-    etymologies = extract_etymologies(word, mw_thesaurus)
+    etymologies = extract_etymologies(word, mw_dict)
     syns = extract_synonyms_or_antonyms(word, mw_thesaurus, SynAntEnum.Synonym)
     ants = extract_synonyms_or_antonyms(word, mw_thesaurus, SynAntEnum.Antonym)
     audio_link = extract_audio_link(mw_dict)
