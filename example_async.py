@@ -12,7 +12,7 @@ from dictionary_wrapper.clients._wm_utils import (
     extract_synonyms_or_antonyms,
 )
 from dictionary_wrapper.clients.mw_client_async import AsyncMerriamWebsterClient
-from dictionary_wrapper.clients.wordnit_client_async import AsyncWordnikClient
+from dictionary_wrapper.clients.wordnik_client_async import AsyncWordnikClient
 from dictionary_wrapper.config import MWDictType
 from dictionary_wrapper.models.common_models import WordField
 from dictionary_wrapper.models.syn_ant_enum import SynAntEnum
