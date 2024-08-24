@@ -93,7 +93,7 @@ def extract_definitions(word: str, dictionary_result: list[dict]) -> list[Defini
                             sentences = d[1]
                             sentence = sentences[0]["t"]
                             word_def.exampleSentence = clean_text(sentence)
-                        extracted_definitions.append(word_def)
+                    extracted_definitions.append(word_def)
 
     return extracted_definitions
 
