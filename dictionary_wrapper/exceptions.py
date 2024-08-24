@@ -1,6 +1,6 @@
 class MerriamWebsterClientException(Exception):
     def __init__(self, status_code: int, content: str, url: str) -> None:
-        self.message = "Error happened on the Merriam Webster Client Side"
+        self.message = "Error happened on the Wordnik Client Side"
         super().__init__(self.message)
 
         self.status_code = status_code

@@ -1,8 +1,8 @@
 import asyncio
 
 import aiohttp
-from english_ipa.cambridge import CambridgeDictScraper
-from english_ipa.cambridge_async import AsyncCambridgeDictScraper
+from english_ipa.cambridge import CambridgeDictScraper  # type: ignore
+from english_ipa.cambridge_async import AsyncCambridgeDictScraper  # type: ignore
 
 from dictionary_wrapper.clients._wm_utils import (
     extract_audio_link,
@@ -72,7 +72,11 @@ async def get_word_field_async(
         )
 
         return _get_word_field_from_request_result(
-            word, mw_dict, mw_thesaurus, sentences, ipa
+            word,
+            mw_dict,
+            mw_thesaurus,  # type: ignore
+            sentences,  # type: ignore
+            ipa,  # type: ignore
         )
 
 

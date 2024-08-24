@@ -1,5 +1,5 @@
 import json
-from typing import Any, Coroutine
+from typing import Any
 
 from aiohttp import ClientSession
 
@@ -17,15 +17,16 @@ class AsyncWordnikClient:
     @staticmethod
     async def fetch_async(
         url, session: ClientSession, not_found_return_value: Any = None
-    ) -> Coroutine[Any, Any, dict]:
+    ) -> dict:
         async with session.get(url) as response:
-            if response.status != 200:
-                raise await WordnikClientException(
-                    status_code=response.status, content=response.text(), url=url
-                )
-
             if response.status == 404:
-                return await not_found_return_value
+                return not_found_return_value
+
+            if response.status != 200:
+                content_text = await response.text()
+                raise WordnikClientException(
+                    status_code=response.status, content=content_text, url=url
+                )
 
             text_response = await response.text()
 

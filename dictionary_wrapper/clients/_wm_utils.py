@@ -13,6 +13,9 @@ from dictionary_wrapper.models.syn_ant_enum import SynAntEnum
 
 def extract_audio_link(dictionary_result: list[dict]) -> str | None:
     first_def = dictionary_result[0]
+    if not isinstance(first_def, dict):
+        return None
+
     audio_dict = first_def.get("hwi")
     if audio_dict:
         pronoun_list = audio_dict.get("prs")
@@ -49,6 +52,9 @@ def __get_audio_subdirectory(audio_id: str) -> str:
 def extract_etymologies(word: str, dictionary_result: list[dict]) -> list[str]:
     etymologies_result = []
     for entry in dictionary_result:
+        if not isinstance(entry, dict):
+            continue
+
         if not _is_not_derived_entry(word, entry["meta"]["id"]):
             continue
         etymologies = entry.get("et", [])
@@ -60,9 +66,12 @@ def extract_etymologies(word: str, dictionary_result: list[dict]) -> list[str]:
     return etymologies_result
 
 
-def extract_definitions(word: str, dictionary_result: list[dict]) -> list[str]:
-    extracted_definitions = []
+def extract_definitions(word: str, dictionary_result: list[dict]) -> list[Definition]:
+    extracted_definitions: list[Definition] = []
     for entry in dictionary_result:
+        if not isinstance(entry, dict):
+            continue
+
         if not _is_not_derived_entry(word, entry["meta"]["id"]):
             continue
         part_of_speech = entry["fl"]
@@ -99,6 +108,9 @@ def extract_synonyms_or_antonyms(
 ) -> list[SynonymOrAntonym]:
     extracted_results = []
     for entry in thesaurus_result:
+        if not isinstance(entry, dict):
+            continue
+
         if not _is_not_derived_entry(word, entry["meta"]["id"]):
             continue
         part_of_speech = entry["fl"]

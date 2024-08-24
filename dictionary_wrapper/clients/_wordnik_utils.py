@@ -1,4 +1,4 @@
-import bs4 as bs
+import bs4 as bs  # type: ignore
 
 
 def _parse_xml(content: str) -> str:

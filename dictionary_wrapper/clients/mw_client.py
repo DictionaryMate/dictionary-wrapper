@@ -15,7 +15,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 import json
 
-import requests
+import requests  # type: ignore
 
 from dictionary_wrapper.config import MWDictType
 from dictionary_wrapper.models.common_models import Definition, SynonymOrAntonym
@@ -43,9 +43,7 @@ class MerriamWebsterClient:
         return extract_definitions(self.word, self.dictionary_result)
 
     def extract_synonyms_or_antonyms(self, type: SynAntEnum) -> list[SynonymOrAntonym]:
-        return extract_synonyms_or_antonyms(
-            self.word, self.thesaurus_result, type.value
-        )
+        return extract_synonyms_or_antonyms(self.word, self.thesaurus_result, type)
 
     def _get_api_result(self, dict_type: MWDictType, api_key: str) -> list[dict]:
         url = form_url(self.word, dict_type, api_key)

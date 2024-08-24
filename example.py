@@ -1,10 +1,11 @@
 import os
 
 from dotenv import load_dotenv
-from english_ipa.cambridge import CambridgeDictScraper
+from english_ipa.cambridge import CambridgeDictScraper  # type: ignore
 
 from dictionary_wrapper import get_word_field
 from dictionary_wrapper.clients.mw_client import MerriamWebsterClient
+from dictionary_wrapper.clients.wordnik_client import WordnikClient
 from dictionary_wrapper.models.syn_ant_enum import SynAntEnum
 
 load_dotenv()
@@ -17,11 +18,18 @@ wordnik_api_key = os.getenv("WORDIK_API_KEY")
 word = "gallant"
 
 word_field = get_word_field(
-    word, dictionary_api_key, thesaurus_api_key, wordnik_api_key
+    word,
+    dictionary_api_key,  # type: ignore
+    thesaurus_api_key,  # type: ignore
+    wordnik_api_key,  # type: ignore
 )
 
 ## get definitions from Merriam-Webster Dictionary
-mw_client = MerriamWebsterClient(word, dictionary_api_key, thesaurus_api_key)
+mw_client = MerriamWebsterClient(
+    word,
+    dictionary_api_key,  # type: ignore
+    thesaurus_api_key,  # type: ignore
+)
 definition = mw_client.extract_definitions()
 
 ## get definitions, synonyms and antonyms from Merriam-Webster Thesaurus
@@ -35,7 +43,10 @@ audio_link = mw_client.extract_audio_link()
 etymologies = mw_client.extract_etymologies()
 
 ## get example sentences from Wordnik
-wordnik_client = MerriamWebsterClient(word, dictionary_api_key, thesaurus_api_key)
+wordnik_client = WordnikClient(
+    word,
+    wordnik_api_key,  # type: ignore
+)
 example_sentences = wordnik_client.extract_example_sentences()
 
 ## get audio link from Wordnik

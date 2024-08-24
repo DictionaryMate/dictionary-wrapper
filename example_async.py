@@ -3,7 +3,7 @@ import os
 
 import aiohttp
 from dotenv import load_dotenv
-from english_ipa.cambridge_async import AsyncCambridgeDictScraper
+from english_ipa.cambridge_async import AsyncCambridgeDictScraper  # type: ignore
 
 from dictionary_wrapper import get_word_field_async
 from dictionary_wrapper.clients._wm_utils import (
@@ -14,7 +14,6 @@ from dictionary_wrapper.clients._wm_utils import (
 from dictionary_wrapper.clients.mw_client_async import AsyncMerriamWebsterClient
 from dictionary_wrapper.clients.wordnik_client_async import AsyncWordnikClient
 from dictionary_wrapper.config import MWDictType
-from dictionary_wrapper.models.common_models import WordField
 from dictionary_wrapper.models.syn_ant_enum import SynAntEnum
 
 load_dotenv()
@@ -37,9 +36,7 @@ asyncio.run(main())
 
 
 ## get api results from merriam-webster
-async def fetch_mw_result(
-    word: str, dictionary_api_key: str, thesaurus_api_key: str, wordnik_api_key: str
-) -> WordField:
+async def fetch_mw_result(word: str, dictionary_api_key: str, thesaurus_api_key: str):
     mw_client = AsyncMerriamWebsterClient(word)
     async with aiohttp.ClientSession() as session:
         mw_dictionary = asyncio.create_task(
@@ -53,16 +50,14 @@ async def fetch_mw_result(
 
 
 ## get definitions, synonyms and antonyms, etymology, audio link from Merriam-Webster Thesaurus
-async def get_definitions(
-    word: str, dictionary_api_key: str, thesaurus_api_key: str, wordnik_api_key: str
-):
+async def get_definitions(word: str, dictionary_api_key: str, thesaurus_api_key: str):
     dictionary_result, thesaurus_result = await fetch_mw_result(
-        word, dictionary_api_key, thesaurus_api_key, wordnik_api_key
+        word, dictionary_api_key, thesaurus_api_key
     )
 
     definitions = extract_definitions(word, dictionary_result)
-    synonyms = extract_synonyms_or_antonyms(SynAntEnum.Synonym, thesaurus_result)
-    antonyms = extract_synonyms_or_antonyms(SynAntEnum.Antonym, thesaurus_result)
+    synonyms = extract_synonyms_or_antonyms(word, thesaurus_result, SynAntEnum.Synonym)
+    antonyms = extract_synonyms_or_antonyms(word, thesaurus_result, SynAntEnum.Antonym)
     etymologies = extract_etymologies(word, dictionary_result)
     audio_link = extract_definitions(word, dictionary_result)
 

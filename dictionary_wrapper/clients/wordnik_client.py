@@ -1,4 +1,4 @@
-import requests
+import requests  # type: ignore
 
 import dictionary_wrapper.config as config
 from dictionary_wrapper.clients._wordnik_utils import _parse_xml
